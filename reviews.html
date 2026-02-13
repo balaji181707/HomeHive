@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews & Ratings - HomeHive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="OIP.jpg" alt="HomeHive Logo" class="logo-image">
+                <h1>HomeHive</h1>
+            </div>
+            <!-- Navigation -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="reviews.html" class="active">Reviews & Ratings</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Title Section -->
+        <section class="page-title">
+            <h2>Reviews & Ratings</h2>
+            <p>See what our customers say about HomeHive listings</p>
+        </section>
+
+        <!-- Overall Rating Section -->
+        <section class="overall-rating">
+            <div class="rating-summary">
+                <div class="rating-score">
+                    <h3>Overall Rating</h3>
+                    <div class="big-stars">⭐ 4.7 / 5.0</div>
+                    <p>Based on 2,450+ customer reviews</p>
+                </div>
+                <div class="rating-breakdown">
+                    <div class="rating-row">
+                        <span>⭐⭐⭐⭐⭐</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 60%;"></div>
+                        </div>
+                        <span>1,470</span>
+                    </div>
+                    <div class="rating-row">
+                        <span>⭐⭐⭐⭐</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 25%;"></div>
+                        </div>
+                        <span>612</span>
+                    </div>
+                    <div class="rating-row">
+                        <span>⭐⭐⭐</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 10%;"></div>
+                        </div>
+                        <span>245</span>
+                    </div>
+                    <div class="rating-row">
+                        <span>⭐⭐</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 3%;"></div>
+                        </div>
+                        <span>73</span>
+                    </div>
+                    <div class="rating-row">
+                        <span>⭐</span>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 2%;"></div>
+                        </div>
+                        <span>50</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Review Section -->
+        <section class="add-review-section">
+            <h3>Share Your Experience</h3>
+            <form class="review-form">
+                <div class="form-group">
+                    <label for="reviewName">Your Name:</label>
+                    <input type="text" id="reviewName" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewProperty">Property Name:</label>
+                    <input type="text" id="reviewProperty" placeholder="Property you're reviewing" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewRating">Rating:</label>
+                    <div class="star-rating">
+                        <span class="star" onclick="setRating(1)">⭐</span>
+                        <span class="star" onclick="setRating(2)">⭐</span>
+                        <span class="star" onclick="setRating(3)">⭐</span>
+                        <span class="star" onclick="setRating(4)">⭐</span>
+                        <span class="star" onclick="setRating(5)">⭐</span>
+                        <input type="hidden" id="reviewRating" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewComment">Your Review:</label>
+                    <textarea id="reviewComment" placeholder="Share your experience..." rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </section>
+
+        <!-- Customer Reviews Section -->
+        <section class="customer-reviews">
+            <h3>Recent Reviews</h3>
+            <div class="reviews-grid">
+                <!-- Review Cards -->
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Excellent Stay in Downtown Flat</h4>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Rajesh Kumar</strong> • Jan 20, 2026</p>
+                    <p class="review-property">📍 <strong>Downtown Residency Flat</strong></p>
+                    <p class="review-comment">Amazing experience! The flat was clean, well-maintained, and exactly as described. The landlord was very responsive and helpful. Great location with easy access to metro. Highly recommended!</p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Perfect PG for Students</h4>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Priya Sharma</strong> • Jan 18, 2026</p>
+                    <p class="review-property">📍 <strong>Tech Park PG</strong></p>
+                    <p class="review-comment">Best decision for my college years! The PG has a friendly atmosphere, delicious food, and excellent maintenance staff. The rooms are spacious and well-lit. Perfect for students!</p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Luxurious Penthouse Experience</h4>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Amit Verma</strong> • Jan 15, 2026</p>
+                    <p class="review-property">📍 <strong>Skyline Penthouse Suite</strong></p>
+                    <p class="review-comment">Outstanding penthouse with panoramic city views. Premium amenities, professional management, and exceptional service. Worth every penny. Highly satisfied with HomeHive's listing quality!</p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Comfortable Room Near Market</h4>
+                        <div class="review-rating">⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Neha Singh</strong> • Jan 12, 2026</p>
+                    <p class="review-property">📍 <strong>Central Market Room</strong></p>
+                    <p class="review-comment">Good room in a convenient location. Well-furnished with basic amenities. Owner is cooperative. Only minor issue was noise during evenings, but overall a good stay.</p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Great Shared PG Space</h4>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Vikram Patel</strong> • Jan 10, 2026</p>
+                    <p class="review-property">📍 <strong>Silicon Valley PG</strong></p>
+                    <p class="review-comment">Fantastic shared living space. Made great friends here. The common areas are beautiful, housekeeping is regular, and the manager is very accommodating. Meals are diverse and tasty!</p>
+                </article>
+
+                <article class="review-card">
+                    <div class="review-header">
+                        <h4>Good Value Flat</h4>
+                        <div class="review-rating">⭐⭐⭐⭐</div>
+                    </div>
+                    <p class="review-user">By <strong>Ananya Gupta</strong> • Jan 8, 2026</p>
+                    <p class="review-property">📍 <strong>Suburban Family Flat</strong></p>
+                    <p class="review-comment">Good value for money. Flat is well-maintained and in a quiet locality. Perfect for families. Some appliances need minor repairs, but landlord promised to fix soon. Good experience overall.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Aside Section -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <h3>📊 Review Statistics</h3>
+            <ul>
+                <li>Total Reviews: <strong>2,450+</strong></li>
+                <li>Verified Buyers: <strong>95%</strong></li>
+                <li>Average Rating: <strong>4.7</strong></li>
+                <li>Helpful Reviews: <strong>2,100+</strong></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About HomeHive</h4>
+                <p>Your trusted platform for finding rental properties instantly.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="OIP.jpg" alt="HomeHive" class="footer-image">
+                <p>&copy; 2026 HomeHive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

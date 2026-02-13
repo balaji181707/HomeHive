@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - HomeHive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="OIP.jpg" alt="HomeHive Logo" class="logo-image">
+                <h1>HomeHive</h1>
+            </div>
+            <!-- Navigation -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="reviews.html">Reviews & Ratings</a></li>
+                    <li><a href="contact.html" class="active">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Title Section -->
+        <section class="page-title">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you. Get in touch with our team!</p>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="contact-container">
+                <!-- Contact Form -->
+                <article class="contact-form-container">
+                    <h3>Send us a Message</h3>
+                    <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                        <div class="form-group">
+                            <label for="contactName">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="contactName" 
+                                name="name" 
+                                placeholder="Your full name" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address *</label>
+                            <input 
+                                type="email" 
+                                id="contactEmail" 
+                                name="email" 
+                                placeholder="your.email@example.com" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactPhone">Phone Number *</label>
+                            <input 
+                                type="tel" 
+                                id="contactPhone" 
+                                name="phone" 
+                                placeholder="+91 XXXXX XXXXX" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject">Subject *</label>
+                            <select id="contactSubject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="listing">Listing Issue</option>
+                                <option value="support">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea 
+                                id="contactMessage" 
+                                name="message" 
+                                placeholder="Please share your message, concerns, or suggestions..." 
+                                rows="6" 
+                                required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </article>
+
+                <!-- Contact Information -->
+                <aside class="contact-info-container">
+                    <h3>Contact Information</h3>
+
+                    <!-- Office Address -->
+                    <div class="info-card">
+                        <h4>📍 Office Address</h4>
+                        <p>
+                            HomeHive Head Office<br>
+                            Tech Park Building, Floor 5<br>
+                            123 Silicon Valley Road<br>
+                            Bangalore, Karnataka 560001<br>
+                            India
+                        </p>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="info-card">
+                        <h4>📧 Email</h4>
+                        <p>
+                            <strong>General:</strong> hello@homehive.com<br>
+                            <strong>Support:</strong> support@homehive.com<br>
+                            <strong>Partnerships:</strong> partners@homehive.com
+                        </p>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="info-card">
+                        <h4>📞 Phone</h4>
+                        <p>
+                            <strong>Support:</strong> +91-1800-HOMEHIVE (1800-466-3448)<br>
+                            <strong>Office:</strong> +91-80-XXXX-XXXX<br>
+                            <strong>Hours:</strong> Mon - Fri, 9 AM - 6 PM IST
+                        </p>
+                    </div>
+
+                    <!-- Business Hours -->
+                    <div class="info-card">
+                        <h4>🕐 Business Hours</h4>
+                        <p>
+                            Monday - Friday: 9:00 AM - 6:00 PM<br>
+                            Saturday: 10:00 AM - 4:00 PM<br>
+                            Sunday: Closed
+                        </p>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="info-card">
+                        <h4>❓ Quick Links</h4>
+                        <ul>
+                            <li><a href="#faq">FAQ</a></li>
+                            <li><a href="#help">Help Center</a></li>
+                            <li><a href="#status">System Status</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Google Map (Optional - Embedded) -->
+            <div class="map-container">
+                <h3>Find Us on Map</h3>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7597788503316!2d77.6310397!3d12.9627799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16a4c26cffe7%3A0x1234567890!2sTech%20Park%2C%20Bangalore!5e0!3m2!1sen!2sin!4v1234567890" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-grid">
+                <article class="faq-card">
+                    <h4>How do I list my property on HomeHive?</h4>
+                    <p>You can register as a landlord and list your property through our dashboard. It typically takes 24-48 hours for approval.</p>
+                </article>
+
+                <article class="faq-card">
+                    <h4>Is there a fee to list properties?</h4>
+                    <p>Listing on HomeHive is free! We earn through premium features and partnerships.</p>
+                </article>
+
+                <article class="faq-card">
+                    <h4>How are reviews verified?</h4>
+                    <p>All reviews are from verified tenants who have completed their stay. We ensure authenticity and accuracy.</p>
+                </article>
+
+                <article class="faq-card">
+                    <h4>What payment methods do you accept?</h4>
+                    <p>We accept credit cards, debit cards, UPI, net banking, and digital wallets for secure transactions.</p>
+                </article>
+
+                <article class="faq-card">
+                    <h4>How can I report a property issue?</h4>
+                    <p>Use the "Report" button on any listing or contact our support team directly. We investigate all complaints.</p>
+                </article>
+
+                <article class="faq-card">
+                    <h4>Is my personal information safe?</h4>
+                    <p>Yes, we use industry-standard encryption and privacy practices to protect all user data.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About HomeHive</h4>
+                <p>Your trusted platform for finding rental properties instantly.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="OIP.jpg" alt="HomeHive" class="footer-image">
+                <p>&copy; 2026 HomeHive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

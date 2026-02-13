@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeHive - Find Your Perfect Stay, Instantly</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="OIP.jpg" alt="HomeHive Logo" class="logo-image">
+                <h1>HomeHive</h1>
+            </div>
+            <!-- Navigation -->
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="reviews.html">Reviews & Ratings</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Find Your Perfect Stay, Instantly.</h2>
+                <p>Discover premium rentals with real-time availability and verified ratings. Choose from PGs, Rooms, Flats, and Penthouses in your preferred location.</p>
+            </div>
+        </section>
+
+        <!-- Search & Filter Section -->
+        <section class="search-filter-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search by location or property name..." />
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-container">
+                <button class="filter-btn" onclick="toggleFilterMenu()">🔽 Filter</button>
+                
+                <!-- Filter Dropdown Menu -->
+                <div id="filterMenu" class="filter-menu hidden">
+                    <div class="filter-group">
+                        <label><strong>Property Type:</strong></label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" class="property-filter" value="PG"> PG</label>
+                            <label><input type="checkbox" class="property-filter" value="Room"> Room</label>
+                            <label><input type="checkbox" class="property-filter" value="Flat"> Flat</label>
+                            <label><input type="checkbox" class="property-filter" value="Penthouse"> Penthouse</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><strong>Price Range:</strong></label>
+                        <select id="priceFilter">
+                            <option value="">All Prices</option>
+                            <option value="5000">Below ₹5,000</option>
+                            <option value="10000">₹5,000 - ₹10,000</option>
+                            <option value="20000">₹10,000 - ₹20,000</option>
+                            <option value="50000">₹20,000 - ₹50,000</option>
+                            <option value="100000">Above ₹50,000</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><strong>Food Availability:</strong></label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="foodYes"> Yes</label>
+                            <label><input type="checkbox" id="foodNo"> No</label>
+                        </div>
+                    </div>
+
+                    <button class="apply-filter-btn" onclick="applyFilters()">Apply Filters</button>
+                    <button class="reset-filter-btn" onclick="resetFilters()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Dark/Light Mode Toggle -->
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+        </section>
+
+        <!-- Listings Section -->
+        <section class="listings">
+            <h2>Available Rentals</h2>
+            <div class="listings-grid" id="listingsGrid">
+                <!-- Listings will be dynamically populated here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Aside Section - Quick Info -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <h3>💡 Why HomeHive?</h3>
+            <ul>
+                <li>Real-time availability</li>
+                <li>Verified landlords</li>
+                <li>Customer ratings</li>
+                <li>Multiple property types</li>
+                <li>Easy filtering</li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About HomeHive</h4>
+                <p>Your trusted platform for finding rental properties instantly.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="OIP.jpg" alt="HomeHive" class="footer-image">
+                <p>&copy; 2026 HomeHive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
