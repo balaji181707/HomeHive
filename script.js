@@ -3,98 +3,24 @@
    Interactive UI Features
    ======================================== */
 
-// Sample Rental Listings Data
-const rentalListings = [
-    {
-        id: 1,
-        name: "Downtown Residency Flat",
-        type: "Flat",
-        price: 15000,
-        food: "Yes",
-        timings: "6 AM - 10 PM",
-        location: "Downtown, Bangalore",
-        rating: 4.8
-    },
-    {
-        id: 2,
-        name: "Tech Park PG",
-        type: "PG",
-        price: 8000,
-        food: "Yes",
-        timings: "Open 24/7",
-        location: "Tech Park, Bangalore",
-        rating: 4.6
-    },
-    {
-        id: 3,
-        name: "Skyline Penthouse Suite",
-        type: "Penthouse",
-        price: 45000,
-        food: "No",
-        timings: "6 AM - 11 PM",
-        location: "MG Road, Bangalore",
-        rating: 4.9
-    },
-    {
-        id: 4,
-        name: "Central Market Room",
-        type: "Room",
-        price: 5000,
-        food: "No",
-        timings: "7 AM - 9 PM",
-        location: "Central Market, Bangalore",
-        rating: 4.3
-    },
-    {
-        id: 5,
-        name: "Silicon Valley PG",
-        type: "PG",
-        price: 9500,
-        food: "Yes",
-        timings: "Open 24/7",
-        location: "Indiranagar, Bangalore",
-        rating: 4.7
-    },
-    {
-        id: 6,
-        name: "Suburban Family Flat",
-        type: "Flat",
-        price: 12000,
-        food: "Yes",
-        timings: "6 AM - 10 PM",
-        location: "Whitefield, Bangalore",
-        rating: 4.4
-    },
-    {
-        id: 7,
-        name: "Business District Room",
-        type: "Room",
-        price: 6500,
-        food: "No",
-        timings: "7 AM - 10 PM",
-        location: "Business District, Bangalore",
-        rating: 4.5
-    },
-    {
-        id: 8,
-        name: "Premium Penthouse Apartment",
-        type: "Penthouse",
-        price: 55000,
-        food: "Yes",
-        timings: "6 AM - 11 PM",
-        location: "Koramangala, Bangalore",
-        rating: 4.9
-    }
-];
+// Live Data from Backend API
+let rentalListings = [];
 
 // ========================================
 // 1. INITIALIZE PAGE
 // ========================================
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Load initial listings
+document.addEventListener('DOMContentLoaded', async function () {
+    // Load initial listings from Neo4j Backend via API
     if (document.getElementById('listingsGrid')) {
-        renderListings(rentalListings);
+        try {
+            const data = await api.get('/properties');
+            rentalListings = data.properties || [];
+            renderListings(rentalListings);
+        } catch(e) {
+            console.error("Backend unreachable", e);
+            document.getElementById('listingsGrid').innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Unable to connect to database API.</p>';
+        }
     }
 
     // Initialize theme - default to light mode
@@ -137,7 +63,7 @@ function renderListings(listings) {
                         <h3 class="listing-name">${listing.name}</h3>
                         <span class="listing-type">${listing.type}</span>
                     </div>
-                    <div class="listing-rating">⭐ ${listing.rating}</div>
+                    <div class="listing-rating" onclick="openRoomReviewsModal('${listing.id}', '${listing.name.replace(/'/g, "\\'")}')" style="cursor:pointer; transition:0.2s;" title="Click to view & add reviews">⭐ ${listing.rating || '4.5'}</div>
                 </div>
                 
                 <div class="listing-price">
@@ -148,11 +74,11 @@ function renderListings(listings) {
                 <div class="listing-details">
                     <div class="detail-item">
                         <span>🍽️</span>
-                        <span>Food: <strong>${listing.food}</strong></span>
+                        <span>Food: <strong>${listing.foodAvailable || 'No'}</strong></span>
                     </div>
                     <div class="detail-item">
                         <span>⏰</span>
-                        <span>Timings: <strong>${listing.timings}</strong></span>
+                        <span>Timings: <strong>${listing.timings || 'Standard'}</strong></span>
                     </div>
                 </div>
 
@@ -160,7 +86,7 @@ function renderListings(listings) {
                     <div class="listing-location">
                         📍 ${listing.location}
                     </div>
-                    <button class="view-details-btn" onclick="viewDetails(${listing.id})">
+                    <button class="view-details-btn" onclick="window.viewDetails('${listing.id}')">
                         View Details →
                     </button>
                 </div>
@@ -237,8 +163,8 @@ function resetFilters() {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) searchInput.value = '';
 
-    // Render all listings
-    renderListings(rentalListings);
+    // Fetch clean slate from backend
+    filterListings();
 
     // Close filter menu
     const menu = document.getElementById('filterMenu');
@@ -247,43 +173,25 @@ function resetFilters() {
     }
 }
 
-function filterListings() {
-    let filtered = rentalListings.filter(listing => {
-        // Filter by property type
+async function filterListings() {
+    try {
+        const query = new URLSearchParams();
+        
+        // Push filter criteria intelligently to backend logic
         if (currentFilters.propertyTypes.length > 0) {
-            if (!currentFilters.propertyTypes.includes(listing.type)) {
-                return false;
-            }
+            currentFilters.propertyTypes.forEach(t => query.append('type', t));
         }
+        if (currentFilters.priceMax) query.append('maxPrice', currentFilters.priceMax);
+        if (currentFilters.foodAvailability) query.append('foodAvailable', currentFilters.foodAvailability);
+        if (currentFilters.searchText) query.append('searchInput', currentFilters.searchText);
 
-        // Filter by price
-        if (currentFilters.priceMax) {
-            if (listing.price > currentFilters.priceMax) {
-                return false;
-            }
-        }
-
-        // Filter by food availability
-        if (currentFilters.foodAvailability) {
-            if (listing.food !== currentFilters.foodAvailability) {
-                return false;
-            }
-        }
-
-        // Filter by search text
-        if (currentFilters.searchText) {
-            const searchLower = currentFilters.searchText.toLowerCase();
-            const matchesName = listing.name.toLowerCase().includes(searchLower);
-            const matchesLocation = listing.location.toLowerCase().includes(searchLower);
-            if (!matchesName && !matchesLocation) {
-                return false;
-            }
-        }
-
-        return true;
-    });
-
-    renderListings(filtered);
+        // Await the graph database to filter instead of the frontend
+        const data = await api.get(`/properties?${query.toString()}`);
+        rentalListings = data.properties || [];
+        renderListings(rentalListings);
+    } catch(e) {
+        console.error("Filter request failed", e);
+    }
 }
 
 // ========================================
@@ -308,11 +216,28 @@ function debounce(func, delay) {
 // 5. VIEW DETAILS
 // ========================================
 
-function viewDetails(listingId) {
-    const listing = rentalListings.find(l => l.id === listingId);
-    if (listing) {
-        alert(`📍 Details for: ${listing.name}\n\nType: ${listing.type}\nPrice: ₹${listing.price}/month\nFood: ${listing.food}\nTimings: ${listing.timings}\nLocation: ${listing.location}\nRating: ${listing.rating}/5\n\nThis feature would typically open a detailed view page.`);
-    }
+window.viewDetails = function(listingId) {
+    const listing = rentalListings.find(l => String(l.id) === String(listingId));
+    if (!listing) return;
+
+    // Grab modal components
+    const modal = document.getElementById('propertyModal');
+    if (!modal) return; // Fail safe if not on index.html
+
+    // Paint text data
+    document.getElementById('modalTitle').innerText = listing.name;
+    document.getElementById('modalLocation').innerText = `📍 ${listing.location}`;
+    document.getElementById('modalType').innerText = listing.type;
+    document.getElementById('modalPrice').innerText = `₹${listing.price.toLocaleString()} / month`;
+    document.getElementById('modalFood').innerText = listing.foodAvailable || 'No';
+    document.getElementById('modalTimings').innerText = listing.timings || 'Standard Hours';
+
+    // Inject live Map component
+    const mapContainer = document.getElementById('mapContainer');
+    mapContainer.innerHTML = `<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=${encodeURIComponent(listing.location)}&output=embed"></iframe>`;
+
+    // Make modal visible
+    modal.classList.remove('hidden');
 }
 
 // ========================================

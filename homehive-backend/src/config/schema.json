@@ -1,0 +1,9 @@
+{
+  "nodes": ["User", "Property", "Review"],
+  "relationships": [
+    "User-[:POSTS]->Review",
+    "User-[:LIKES]->Review",
+    "User-[:INTERESTED_IN]->Property",
+    "Property-[:HAS_REVIEW]->Review"
+  ]
+}

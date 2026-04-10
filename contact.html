@@ -17,9 +17,9 @@
             <!-- Navigation -->
             <nav class="navbar">
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="reviews.html">Reviews & Ratings</a></li>
+                    <li><a href="home.html">Home</a></li>
                     <li><a href="contact.html" class="active">Contact Us</a></li>
+                    <li id="authNavItem"><button class="reset-filter-btn" style="padding: 0.5rem 1rem; margin:0;" onclick="logout()">Log Out</button></li>
                 </ul>
             </nav>
         </div>
@@ -243,6 +243,23 @@
         </div>
     </footer>
 
+    <!-- Auth Modal Overlay -->
+    <div id="authModal" class="hidden" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; display:flex; justify-content:center; align-items:center; backdrop-filter:blur(8px);">
+        <div style="background:var(--surface); padding:2.5rem; border-radius:20px; width:100%; max-width:400px; box-shadow:var(--shadow-lg); border: 1px solid var(--border-color);">
+            <h2 id="authTitle" style="margin-bottom:1.5rem; text-align:center; color:var(--text-primary); font-family: 'Montserrat', sans-serif;">Login to HomeHive</h2>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <input type="text" id="authName" placeholder="Full Name" class="search-bar" style="width:100%; margin-bottom:1rem; display:none;" />
+                <input type="email" id="authEmail" placeholder="Email Address" class="search-bar" required style="width:100%; margin-bottom:1rem;" />
+                <input type="password" id="authPassword" placeholder="Password" class="search-bar" required style="width:100%; margin-bottom:1.5rem;" />
+                <button type="submit" class="apply-filter-btn" style="width:100%; font-size: 1.1rem;">Submit</button>
+            </form>
+            <p style="text-align:center; margin-top:1.5rem; cursor:pointer; color:var(--text-secondary); font-weight: 500;" onclick="switchAuthMode()" id="authSwitchText">Don't have an account? Signup</p>
+            <button onclick="toggleAuthModal()" style="width:100%; margin-top:1rem;" class="reset-filter-btn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="auth-ui.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

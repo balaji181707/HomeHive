@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surveillance - HomeHive Admin</title>
+    <!-- Use inline distinct styling rather than importing global consumer styles -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --admin-bg: #0B0E14;
+            --admin-surface: #151A23;
+            --admin-border: #2A3143;
+            --admin-text: #E2E8F0;
+            --admin-text-muted: #94A3B8;
+            --admin-accent: #E63946;
+        }
+        
+        body { 
+            margin: 0; 
+            background: var(--admin-bg); 
+            color: var(--admin-text);
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+        
+        /* Specialized Admin Sidebar Ribbon */
+        .sidebar { 
+            width: 260px; 
+            background: var(--admin-surface); 
+            border-right: 1px solid var(--admin-border); 
+            padding: 2rem 1.5rem; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .sidebar-title { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--admin-accent); 
+            font-size: 1.6rem; 
+            font-weight: 800;
+            margin-bottom: 2.5rem; 
+            letter-spacing: 1px;
+        }
+        .nav-item { 
+            padding: 1rem 1.2rem; 
+            border-radius: 10px; 
+            color: var(--admin-text-muted); 
+            text-decoration: none; 
+            font-weight: 500; 
+            margin-bottom: 0.5rem; 
+            display: block; 
+            transition: all 0.2s;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.05); }
+        .nav-item.active { background: rgba(230, 57, 70, 0.1); color: var(--admin-accent); border-right: 3px solid var(--admin-accent); }
+        
+        .main-dashboard { flex: 1; display: flex; flex-direction: column; }
+        
+        /* Top Navigation Header */
+        .topbar { 
+            height: 75px; 
+            background: var(--admin-surface); 
+            border-bottom: 1px solid var(--admin-border); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 2rem; 
+        }
+        .logout-btn { 
+            background: transparent; 
+            color: var(--admin-text-muted); 
+            border: 1px solid var(--admin-border); 
+            padding: 0.6rem 1.2rem; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+        
+        /* Graph Visualizer Frame */
+        .graph-wrapper { flex: 1; padding: 2rem; position: relative; }
+        
+        #graph-container { 
+            width: 100%; 
+            height: 100%; 
+            background: #0f1219; 
+            border-radius: 12px; 
+            border: 1px solid var(--admin-border); 
+            overflow: hidden; 
+            cursor: grab; 
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+        #graph-container:active { cursor: grabbing; }
+        
+        /* Legend HUD Overlaid on Graph */
+        .legend { 
+            position: absolute; 
+            top: 3.5rem; 
+            left: 3.5rem; 
+            background: rgba(21, 26, 35, 0.85); 
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--admin-border); 
+            padding: 1.5rem; 
+            border-radius: 12px; 
+            pointer-events: none; /* Let clicks pass through to D3 graph */
+        }
+        .legend-item { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; margin-bottom: 0.8rem; font-weight: 500;}
+        .color-dot { width: 12px; height: 12px; border-radius: 50%; }
+        
+        /* Zoom Control Overlay */
+        .zoom-controls {
+            position: absolute;
+            bottom: 3.5rem;
+            right: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .zoom-hint {
+            background: rgba(21, 26, 35, 0.85);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--admin-text-muted);
+            border: 1px solid var(--admin-border);
+        }
+    </style>
+</head>
+<body>
+    <!-- Entirely Custom Admin App Shell -->
+    <div class="sidebar">
+        <div class="sidebar-title">Admin Hive</div>
+        <a href="#" class="nav-item active">Network Surveillance</a>
+        <a href="home.html" class="nav-item">Consumer Site</a>
+    </div>
+
+    <div class="main-dashboard">
+        <div class="topbar">
+            <h2 style="font-size: 1.15rem; font-weight: 600; color:var(--admin-text);">Live System Nodes</h2>
+            <div style="display:flex; gap:1rem;">
+                <button class="logout-btn" style="color:var(--admin-accent); border-color:var(--admin-accent);" onclick="window.exportGraphSVG()">Export SVG (Offline)</button>
+                <button class="logout-btn" onclick="logoutAdmin()">Secure Logout</button>
+            </div>
+        </div>
+        
+        <div class="graph-wrapper">
+            <!-- HUD Information -->
+            <div class="legend">
+                <div style="margin-bottom: 12px; font-weight: bold; color:var(--admin-text); letter-spacing: 0.5px;">Schema Legend</div>
+                <div class="legend-item"><div class="color-dot" style="background:#7F77DD;"></div> User Profiles</div>
+                <div class="legend-item"><div class="color-dot" style="background:#1D9E75;"></div> Listed Properties</div>
+                <div class="legend-item"><div class="color-dot" style="background:#D85A30;"></div> Authored Reviews</div>
+            </div>
+            
+            <div class="zoom-controls">
+                <div class="zoom-hint">🖱️ Scroll wheel to zoom | Click & Drag to track pan</div>
+            </div>
+
+            <!-- D3.js mounts here -->
+            <div id="graph-container"></div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        // Security Gate: Ensure they passed the Admin Login gateway
+        if (!localStorage.getItem('hh_admin_token')) {
+            window.location.href = 'index.html';
+        }
+        function logoutAdmin() {
+            localStorage.removeItem('hh_admin_token');
+            localStorage.removeItem('hh_token');
+            window.location.href = 'index.html';
+        }
+    </script>
+    <script src="admin-graph.js"></script>
+</body>
+</html>

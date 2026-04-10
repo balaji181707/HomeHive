@@ -1,0 +1,3 @@
+◇ injected env (6) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+HomeHive API running slowly on http://localhost:3000
+[0mPOST /api/auth/signup [32m201[0m 1657.291 ms - 384[0m

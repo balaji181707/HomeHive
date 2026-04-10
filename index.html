@@ -3,145 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeHive - Find Your Perfect Stay, Instantly</title>
-    <link rel="stylesheet" href="style.css">
+    <title>HomeHive Universal Portal</title>
+    <!-- Same font styling architecture for consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --surface: #ffffff;
+            --background: #f4f7f6;
+            --primary: #E63946;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #D62A37;
+            transform: translateY(-2px);
+        }
+
+        .toggle-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .toggle-text:hover {
+            color: var(--primary);
+        }
+
+        .error-msg {
+            color: #EF4444;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <img src="OIP.jpg" alt="HomeHive Logo" class="logo-image">
-                <h1>HomeHive</h1>
-            </div>
-            <!-- Navigation -->
-            <nav class="navbar">
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="reviews.html">Reviews & Ratings</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h2>Find Your Perfect Stay, Instantly.</h2>
-                <p>Discover premium rentals with real-time availability and verified ratings. Choose from PGs, Rooms, Flats, and Penthouses in your preferred location.</p>
-            </div>
-        </section>
+    <div class="login-box">
+        <div class="logo">HomeHive</div>
+        <div class="title" id="portalTitle">Sign in to your account</div>
+        
+        <div class="error-msg" id="errorMsg">Authentication Failed</div>
 
-        <!-- Search & Filter Section -->
-        <section class="search-filter-section">
-            <div class="search-container">
-                <input type="text" id="searchInput" class="search-bar" placeholder="Search by location or property name..." />
-                <button class="search-btn">🔍</button>
+        <form id="loginForm">
+            <div class="input-group" id="nameGroup" style="display:none;">
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="John Doe">
+            </div>
+            
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="email" required placeholder="you@example.com">
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" required placeholder="••••••••">
             </div>
 
-            <!-- Filter Buttons -->
-            <div class="filter-container">
-                <button class="filter-btn" onclick="toggleFilterMenu()">🔽 Filter</button>
+            <button type="submit" class="submit-btn" id="submitBtn">Enter Dashboard</button>
+        </form>
+
+        <div class="toggle-text" id="toggleText" onclick="toggleMode()">Brand new? Create an Account</div>
+    </div>
+
+    <!-- Integrate the API handler -->
+    <script src="api.js"></script>
+    <script>
+        // Automatic Router parsing layer
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedToken = localStorage.getItem('hh_token');
+            if (savedToken) {
+                try {
+                    const payload = JSON.parse(atob(savedToken.split('.')[1]));
+                    if (payload.role === 'admin') {
+                        localStorage.setItem('hh_admin_token', savedToken);
+                        window.location.replace('admin.html');
+                    } else {
+                        window.location.replace('home.html');
+                    }
+                } catch(e) { }
+            }
+        });
+
+        let isLoginMode = true;
+
+        window.toggleMode = function() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('portalTitle').innerText = isLoginMode ? 'Sign in to your account' : 'Create HomeHive Account';
+            document.getElementById('nameGroup').style.display = isLoginMode ? 'none' : 'block';
+            document.getElementById('name').required = !isLoginMode;
+            document.getElementById('submitBtn').innerText = isLoginMode ? 'Enter Dashboard' : 'Register Account';
+            document.getElementById('toggleText').innerText = isLoginMode ? "Brand new? Create an Account" : "Already have an account? Sign in";
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            
+            try {
+                const endpoint = isLoginMode ? '/auth/login' : '/auth/signup';
+                const payloadBuilder = isLoginMode ? { email, password } : { name, email, password };
                 
-                <!-- Filter Dropdown Menu -->
-                <div id="filterMenu" class="filter-menu hidden">
-                    <div class="filter-group">
-                        <label><strong>Property Type:</strong></label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" class="property-filter" value="PG"> PG</label>
-                            <label><input type="checkbox" class="property-filter" value="Room"> Room</label>
-                            <label><input type="checkbox" class="property-filter" value="Flat"> Flat</label>
-                            <label><input type="checkbox" class="property-filter" value="Penthouse"> Penthouse</label>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <label><strong>Price Range:</strong></label>
-                        <select id="priceFilter">
-                            <option value="">All Prices</option>
-                            <option value="5000">Below ₹5,000</option>
-                            <option value="10000">₹5,000 - ₹10,000</option>
-                            <option value="20000">₹10,000 - ₹20,000</option>
-                            <option value="50000">₹20,000 - ₹50,000</option>
-                            <option value="100000">Above ₹50,000</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label><strong>Food Availability:</strong></label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" id="foodYes"> Yes</label>
-                            <label><input type="checkbox" id="foodNo"> No</label>
-                        </div>
-                    </div>
-
-                    <button class="apply-filter-btn" onclick="applyFilters()">Apply Filters</button>
-                    <button class="reset-filter-btn" onclick="resetFilters()">Reset</button>
-                </div>
-            </div>
-
-            <!-- Dark/Light Mode Toggle -->
-            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
-        </section>
-
-        <!-- Listings Section -->
-        <section class="listings">
-            <h2>Available Rentals</h2>
-            <div class="listings-grid" id="listingsGrid">
-                <!-- Listings will be dynamically populated here -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Aside Section - Quick Info -->
-    <aside class="sidebar">
-        <div class="sidebar-card">
-            <h3>💡 Why HomeHive?</h3>
-            <ul>
-                <li>Real-time availability</li>
-                <li>Verified landlords</li>
-                <li>Customer ratings</li>
-                <li>Multiple property types</li>
-                <li>Easy filtering</li>
-            </ul>
-        </div>
-    </aside>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About HomeHive</h4>
-                <p>Your trusted platform for finding rental properties instantly.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms of Service</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon">f</a>
-                    <a href="#" class="social-icon">🐦</a>
-                    <a href="#" class="social-icon">📸</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-logo">
-                <img src="OIP.jpg" alt="HomeHive" class="footer-image">
-                <p>&copy; 2026 HomeHive. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+                const res = await api.post(endpoint, payloadBuilder);
+                
+                if (res.token) {
+                    localStorage.setItem('hh_token', res.token);
+                    
+                    // Decode Identity Layer mathematically
+                    const base64Url = res.token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    const payload = JSON.parse(jsonPayload);
+                    
+                    // Physical routing intersection based on Role authorization
+                    if (payload.role === 'admin') {
+                        localStorage.setItem('hh_admin_token', res.token);
+                        window.location.replace('admin.html');
+                    } else {
+                        window.location.replace('home.html');
+                    }
+                }
+            } catch (err) {
+                const errorDiv = document.getElementById('errorMsg');
+                errorDiv.innerText = err.message || "Failed to route cleanly";
+                errorDiv.style.opacity = 1;
+                setTimeout(() => errorDiv.style.opacity = 0, 3000);
+            }
+        });
+    </script>
 </body>
 </html>
