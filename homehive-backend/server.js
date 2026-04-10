@@ -36,4 +36,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => console.log(`HomeHive API running slowly on http://localhost:${PORT}`));
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => console.log(`HomeHive API running locally on http://localhost:${PORT}`));
+}
+
+// Export for Vercel Serverless compatibility
+module.exports = app;

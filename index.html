@@ -165,12 +165,14 @@
     <!-- Integrate the API handler -->
     <script src="api.js"></script>
     <script>
-        // Automatic Router parsing layer
         document.addEventListener('DOMContentLoaded', () => {
             const savedToken = localStorage.getItem('hh_token');
             if (savedToken) {
                 try {
-                    const payload = JSON.parse(atob(savedToken.split('.')[1]));
+                    const base64Url = savedToken.split('.')[1];
+                    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    while(base64.length % 4 !== 0) base64 += '=';
+                    const payload = JSON.parse(atob(base64)); // simple payload read
                     if (payload.role === 'admin') {
                         localStorage.setItem('hh_admin_token', savedToken);
                         window.location.replace('admin.html');
@@ -207,9 +209,12 @@
                 if (res.token) {
                     localStorage.setItem('hh_token', res.token);
                     
-                    // Decode Identity Layer mathematically
+                    // Decode Identity Layer mathematically with strict Base64 Padding injection
                     const base64Url = res.token.split('.')[1];
-                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    while (base64.length % 4 !== 0) {
+                        base64 += '=';
+                    }
                     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
                         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                     }).join(''));
